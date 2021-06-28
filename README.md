@@ -1,1 +1,1 @@
-# dart-gsheets-api
+A simple command-line application.
