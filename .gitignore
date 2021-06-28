@@ -2,5 +2,8 @@
 .dart_tool/
 .packages
 
+# Environment
+.env
+
 # Conventional directory for build output.
 build/
