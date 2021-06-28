@@ -4,7 +4,7 @@ import 'package:dotenv/dotenv.dart' show load, isEveryDefined, env;
 
 void main() async {
   load();
-  if (isEveryDefined(['HOST', 'PORT'])) {
+  if (isEveryDefined(['HOST', 'PORT', 'GSHEET_CREDENTIALS'])) {
     final HOST = env['HOST'];
     final PORT = int.parse(env['PORT']!);
 
