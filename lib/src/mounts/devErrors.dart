@@ -23,6 +23,8 @@ class DevErrors {
       return Response.ok('Refreshing sheet');
     });
 
+    //Add API Routes HERE
+
     router.all('/<.*>', (req) => Response.notFound('Not Found'));
 
     return router;
