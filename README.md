@@ -12,7 +12,7 @@ GSheetRoute(String spreadsheetId, List<String> worksheetIds, {int? firstRow})
 ```
 
 > `String spreadsheetId`: ID of the spreadsheet (can be found in the URL)  
-`List<String> worksheetIds`: IDs of the worksheets to include  
+`List<String> worksheetIds`: IDs of the worksheets to include (found in the URL as gid=`worksheetId`)  
 `int? firstRow`: The first row containing data (defaults to row 1)
 
 
