@@ -22,7 +22,7 @@ To mount your route, simply place it in the body of routes.dart:
 
 ```dart
 //routes.dart
-router.mount('/example', GSheetRoute(...));
+router.mount('/example', GSheetRoute(...).router);
 ```
 
 ## Exposed Endpoints
