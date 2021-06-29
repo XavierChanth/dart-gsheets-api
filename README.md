@@ -35,12 +35,12 @@ In this case `/example` stands for the route you chose when you mounted it.
 The server automatically caches the spreadsheet data for one hour.  
 This endpoint manually updates the cache.
 
-`GET /example/<spreadsheetId>/column/<columnId>`
+`GET /example/<worksheetId>/column/<columnId>`
 
 Returns a JSON object in the format of `{'rowIndex': 'cellValue'}`  
 Note: Both the key and value are a string.
 
-`GET /example/<spreadsheetId>/row/<rowId>`
+`GET /example/<worksheetId>/row/<rowId>`
 
 Returns a JSON list, containing each cell value in order.  
 Note: all values in the list are strings.
