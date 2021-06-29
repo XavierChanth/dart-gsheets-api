@@ -44,3 +44,10 @@ Note: Both the key and value are a string.
 
 Returns a JSON list, containing each cell value in order.  
 Note: all values in the list are strings.
+
+## Sheet Format
+
+The first column of the sheet must contain an index in ascending order to map the rows to.
+The first row containing data must start at 1 to map rows correctly.
+
+![image](https://user-images.githubusercontent.com/33691921/123737165-7b35eb00-d870-11eb-9b5a-80933ba5e7ba.png)
