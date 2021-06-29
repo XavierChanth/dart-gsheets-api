@@ -9,8 +9,6 @@ class Routes {
     router.mount('/taxonomy', Taxonomy().router);
     router.mount('/dev-errors', DevErrors().router);
 
-    router.all('/<.*>', (req) => Response.notFound('Not Found'));
-
     return router;
   }
 }
