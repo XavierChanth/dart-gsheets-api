@@ -31,7 +31,7 @@ class GSheetRoute {
     final router = Router();
 
     // This will error out since it tries to map to itself.
-    router.get('/column/0>', (req) => Response.notFound('Not Found'));
+    router.get('/column/0', (req) => Response.notFound('Not Found'));
 
     router.get('/column/<column|[0-9]+>', (req, String column) async {
       try {
