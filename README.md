@@ -8,11 +8,11 @@ The routes API automatically generates routes to get the rows and columns of a s
 
 ```dart
 //GSheetRoute
-GSheetRoute(String spreadsheetId, List<String> worksheetIds, {int? firstRow})
+GSheetRoute(String spreadsheetId, List<int> worksheetIds, {int? firstRow})
 ```
 
 > `String spreadsheetId`: ID of the spreadsheet (can be found in the URL)  
-> `List<String> worksheetIds`: IDs of the worksheets to include (found in the URL as gid=`worksheetId`)  
+> `List<int> worksheetIds`: IDs of the worksheets to include (found in the URL as gid=`worksheetId`)  
 > `int? firstRow`: The first row containing data (defaults to row 1)
 
 ## Mounting your Route
