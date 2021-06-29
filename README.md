@@ -12,9 +12,8 @@ GSheetRoute(String spreadsheetId, List<String> worksheetIds, {int? firstRow})
 ```
 
 > `String spreadsheetId`: ID of the spreadsheet (can be found in the URL)  
-`List<String> worksheetIds`: IDs of the worksheets to include (found in the URL as gid=`worksheetId`)  
-`int? firstRow`: The first row containing data (defaults to row 1)
-
+> `List<String> worksheetIds`: IDs of the worksheets to include (found in the URL as gid=`worksheetId`)  
+> `int? firstRow`: The first row containing data (defaults to row 1)
 
 ## Mounting your Route
 
@@ -22,8 +21,10 @@ To mount your route, simply place it in the body of routes.dart:
 
 ```dart
 //routes.dart
-router.mount('/example', GSheetRoute(...).router);
+router.mount('/example/', GSheetRoute(...).router);
 ```
+
+Note: The route must start and end with a slash, as `/example/` does.
 
 ## Exposed Endpoints
 
