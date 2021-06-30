@@ -9,14 +9,12 @@ class GSheetRoute {
   final GSheetDriver _gSheetDriver = GSheetDriver.getInstance();
 
   final String _spreadsheetId;
-  final int? _firstDataRow;
-  final List<int> _worksheetIds;
+  final Map<int, int> _worksheets;
 
   Spreadsheet? _spreadsheet;
   DateTime lastUpdate = DateTime.now();
 
-  GSheetRoute(this._spreadsheetId, this._worksheetIds, {int? firstRow})
-      : _firstDataRow = firstRow ?? 1;
+  GSheetRoute(this._spreadsheetId, this._worksheets);
 
   bool _shouldRefresh() =>
       _spreadsheet == null || lastUpdate.difference(DateTime.now()).inHours > 0;
@@ -27,7 +25,7 @@ class GSheetRoute {
 
   Worksheet _worksheet(id) => _spreadsheet!.worksheetById(id)!;
 
-  Router _mountRouter(int worksheetId) {
+  Router _mountRouter(int worksheetId, int firstRow) {
     final router = Router();
 
     // This will error out since it tries to map to itself.
@@ -39,7 +37,7 @@ class GSheetRoute {
         var data = await _worksheet(worksheetId)
             .values
             .map
-            .column(int.parse(column)+1, fromRow: _firstDataRow!);
+            .column(int.parse(column)+1, fromRow: firstRow);
         return Response.ok(jsonEncode(data),
             headers: {'content-type': 'application/json'});
       } catch (e) {
@@ -48,12 +46,12 @@ class GSheetRoute {
       }
     });
 
-    router.get('/row/<row|[0-9]+>', (req, String row) async {
+    router.get('/row/<row|-?[0-9]+>', (req, String row) async {
       try {
         if (_shouldRefresh()) await _refresh();
         var data = (await _worksheet(worksheetId)
             .values
-            .row(int.parse(row) + _firstDataRow! - 1));
+            .row(int.parse(row) + firstRow - 1));
         return Response.ok(jsonEncode(data),
             headers: {'content-type': 'application/json'});
       } catch (e) {
@@ -77,8 +75,8 @@ class GSheetRoute {
       }
     });
 
-    _worksheetIds.forEach((worksheetId) =>
-        router.mount('/$worksheetId/', _mountRouter(worksheetId)));
+    _worksheets.forEach((worksheetId, firstRow) =>
+        router.mount('/$worksheetId/', _mountRouter(worksheetId, firstRow)));
 
     return router;
   }
