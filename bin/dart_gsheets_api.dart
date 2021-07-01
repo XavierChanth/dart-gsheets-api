@@ -1,5 +1,6 @@
 import 'package:shelf/shelf_io.dart' as io;
-import 'package:dart_gsheets_api/src/routes.dart';
+import 'package:shelf/shelf.dart' show Pipeline, logRequests;
+import 'routes.dart';
 import 'package:dotenv/dotenv.dart' show load, isEveryDefined, env;
 
 void main() async {
@@ -8,7 +9,12 @@ void main() async {
     final HOST = env['HOST'];
     final PORT = int.parse(env['PORT']!);
 
-    final server = await io.serve(Routes().handler, HOST, PORT);
+    final handler =
+        Pipeline()
+        //.addMiddleware(logRequests()) //
+        .addHandler(Routes.handler);
+
+    final server = await io.serve(handler, HOST, PORT);
 
     print('Server running on $HOST:${server.port}');
   } else {

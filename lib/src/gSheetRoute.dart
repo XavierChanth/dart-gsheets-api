@@ -4,6 +4,7 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:gsheets/gsheets.dart' show Spreadsheet, Worksheet;
 import 'package:dart_gsheets_api/src/gSheetDriver.dart';
+import 'package:dart_gsheets_api/src/cors.dart';
 
 class GSheetRoute {
   final GSheetDriver _gSheetDriver = GSheetDriver.getInstance();
@@ -29,7 +30,8 @@ class GSheetRoute {
     final router = Router();
 
     // This will error out since it tries to map to itself.
-    router.get('/column/0', (req) => Response.notFound('Not Found'));
+    router.get('/column/0',
+        (req) => Response.notFound('Not Found', headers: Cors.headers));
 
     router.get('/column/<column|[0-9]+>', (req, String column) async {
       try {
@@ -37,12 +39,11 @@ class GSheetRoute {
         var data = await _worksheet(worksheetId)
             .values
             .map
-            .column(int.parse(column)+1, fromRow: firstRow);
-        return Response.ok(jsonEncode(data),
-            headers: {'content-type': 'application/json'});
+            .column(int.parse(column) + 1, fromRow: firstRow);
+        return Response.ok(jsonEncode(data), headers: Cors.headers);
       } catch (e) {
         print('Error: $e');
-        return Response.internalServerError();
+        return Response.internalServerError(headers: Cors.headers);
       }
     });
 
@@ -52,11 +53,10 @@ class GSheetRoute {
         var data = (await _worksheet(worksheetId)
             .values
             .row(int.parse(row) + firstRow - 1));
-        return Response.ok(jsonEncode(data),
-            headers: {'content-type': 'application/json'});
+        return Response.ok(jsonEncode(data), headers: Cors.headers);
       } catch (e) {
         print('Error: $e');
-        return Response.internalServerError();
+        return Response.internalServerError(headers: Cors.headers);
       }
     });
 
@@ -68,10 +68,10 @@ class GSheetRoute {
     router.get('/refresh', (req) async {
       try {
         await _refresh();
-        return Response.ok('Refreshed sheet');
+        return Response.ok('Refreshed sheet', headers: Cors.headers);
       } catch (e) {
         print('Error: $e');
-        return Response.internalServerError();
+        return Response.internalServerError(headers: Cors.headers);
       }
     });
 
